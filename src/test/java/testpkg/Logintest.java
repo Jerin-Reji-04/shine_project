@@ -5,24 +5,16 @@ package testpkg;
 
 import org.testng.annotations.Test;
 import org.testng.AssertJUnit;
-import org.testng.Assert;
-import org.testng.annotations.Test;
 
 import basepkg.Basepgm;
-import pagepkg.Home_before_login;
-import pagepkg.Login;
 import utilitiespkg.Excelutilis;
 
 public class Logintest extends Basepgm
 {
-	Login obj;
-	Home_before_login hbl;
-	
 	
 	@Test(priority=1)
     public void login() throws Exception {
-        hbl = new Home_before_login(driver);
-        obj = new Login(driver);
+        
         
         String xl = "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Selenium works\\Project.xlsx";
         String Sheet = "login";
@@ -60,6 +52,8 @@ public class Logintest extends Basepgm
             }
         }
 	}
+	
+	
 	boolean isLoginSuccessful = false;
 	@Test(priority=2, dependsOnMethods = "login")
     public void loginvalidation() {

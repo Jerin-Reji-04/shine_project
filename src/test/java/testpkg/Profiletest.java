@@ -2,29 +2,24 @@ package testpkg;
 
 
 import org.testng.annotations.Test;
-import org.testng.AssertJUnit;
 import org.openqa.selenium.By;
 import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.testng.AssertJUnit;
 
 import basepkg.Basepgm;
-import pagepkg.Home_before_login;
+import pagepkg.Home;
 import pagepkg.Profile;
 import pagepkg.Login;
 
 public class Profiletest extends Basepgm
 {
-	Profile hobj;
-    Login obj;
-    Home_before_login hbl;
+	
     boolean isLogged = false;
+    
 
     @Test(priority=1)
     public void login1() throws Exception {
-        hbl = new Home_before_login(driver);
-        obj = new Login(driver);
-        hobj = new Profile(driver);
-
+        
         String xl = "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Selenium works\\Project.xlsx";
         
         // This one line does all the Excel work!
@@ -45,6 +40,7 @@ public class Profiletest extends Basepgm
 	{
 		hobj.profiledropdownhover();
 		System.out.println("Profile drop down successfully");
+		hbl.closepopup();
 	}
 	
 	@Test(priority=3)
@@ -65,31 +61,25 @@ public class Profiletest extends Basepgm
 //	public void p_details() throws Exception
 //	{
 //		hobj.personaldetails();
-//		hobj.DOB("1998", "Nov", "21");
+////		hobj.selectDOB( "1998", "Nov", "21");
 //	}
 	
-//	@Test(priority=4)
-//	public void d_job() {
-//	    hobj.desiredjob();
-//	    hobj.selectJobRole("QA", "Qa Analyst");
-//	    
-//	    // Test the CTC
-//	    hobj.selectctc("3 LPA");
-//	    
-//	    // Verification: Get the text of the dropdown and check if it matches
-//	    String actualValue = driver.findElement(By.xpath("//div[contains(@class,'customSelect_selectHeader')]")).getText();
-//	    Assert.assertTrue(actualValue.contains("3 LPA"), "CTC selection did not update the UI!");
-//	    
-//	    hobj.savejobdetails();
-//	}
-//
-//	@Test(priority=5, dependsOnMethods = "login1")
-//	public void c_guide() throws Exception {
-//	    hobj.careerguide();
-//	}
-//		
+	@Test(priority=4)
+	public void d_job() {
+	    hobj.desiredjob();
+	    hobj.selectJobRole("QA", "Qa Analyst");
+//	    hobj.selectjoblocation("Mum", "Mumbai");
+	    
+	    // Test the CTC
+	    hobj.selectctc("3 LPA");
+	    
+	    
+	    hobj.savejobdetails();
+	}
+
 	
-	@Test(priority = 6, dependsOnMethods = "profile")
+	
+	@Test(priority = 5, dependsOnMethods = "profile")
 	public void Signout() throws Exception {
 	    hobj.signout();
 	    // Verify that we are back at the home/login page
@@ -97,4 +87,6 @@ public class Profiletest extends Basepgm
 	    AssertJUnit.assertEquals(isLoggedOut, "Signout failed: Login button not found.");
 	}
 
-	}
+    
+   
+}

@@ -5,7 +5,11 @@
     <classes>
       <class name="testpkg.Profiletest">
         <methods>
+          <include name="objectcreation"/>
           <include name="setup"/>
+          <include name="file_upload"/>
+          <include name="d_job"/>
+          <include name="login1"/>
           <include name="Signout"/>
           <include name="profile"/>
         </methods>

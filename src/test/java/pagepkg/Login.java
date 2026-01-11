@@ -99,7 +99,7 @@ public class Login
 	}
 	
 	// Add this inside public class Login
-	public boolean loginWithExcel(String xlPath, String sheetName, Home_before_login hbl) throws Exception {
+	public boolean loginWithExcel(String xlPath, String sheetName, Home hbl) throws Exception {
 	    int rowcount = utilitiespkg.Excelutilis.getRowCount(xlPath, sheetName);
 
 	    for (int i = 1; i <= rowcount; i++) {
