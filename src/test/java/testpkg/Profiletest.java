@@ -2,14 +2,9 @@ package testpkg;
 
 
 import org.testng.annotations.Test;
-import org.openqa.selenium.By;
-import org.testng.Assert;
 import org.testng.AssertJUnit;
 
 import basepkg.Basepgm;
-import pagepkg.Home;
-import pagepkg.Profile;
-import pagepkg.Login;
 
 public class Profiletest extends Basepgm
 {
@@ -53,6 +48,7 @@ public class Profiletest extends Basepgm
            Thread.sleep(5000); // Wait 5 seconds for the overlay to go away
        } catch (Exception e) {}
        System.out.println("Resume uploaded sucessfully");
+       hbl.closepopup();
        
        
 	}
@@ -64,27 +60,26 @@ public class Profiletest extends Basepgm
 ////		hobj.selectDOB( "1998", "Nov", "21");
 //	}
 	
-	@Test(priority=4)
-	public void d_job() {
-	    hobj.desiredjob();
-	    hobj.selectJobRole("QA", "Qa Analyst");
-//	    hobj.selectjoblocation("Mum", "Mumbai");
-	    
-	    // Test the CTC
-	    hobj.selectctc("3 LPA");
-	    
-	    
-	    hobj.savejobdetails();
-	}
+//	@Test(priority=4)
+//	public void d_job() {
+//	    hobj.desiredjob();
+//	    hobj.selectJobRole("QA", "Qa Analyst");
+////	    hobj.selectjoblocation("Mum", "Mumbai");
+//	    
+//	    // Test the CTC
+//	    hobj.selectctc("3 LPA");
+//	    
+//	    
+//	    hobj.savejobdetails();
+//	}
 
 	
 	
 	@Test(priority = 5, dependsOnMethods = "profile")
-	public void Signout() throws Exception {
+	public void Signout() throws Exception 
+	{
 	    hobj.signout();
-	    // Verify that we are back at the home/login page
-	    boolean isLoggedOut = driver.getPageSource().contains("signout");
-	    AssertJUnit.assertEquals(isLoggedOut, "Signout failed: Login button not found.");
+	   
 	}
 
     

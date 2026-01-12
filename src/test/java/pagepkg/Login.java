@@ -33,6 +33,7 @@ public class Login
 	
 	public void loginclick()//to click the login button in the home page
 	{
+		
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 	    wait.until(ExpectedConditions.elementToBeClickable(slogin));
 	    slogin.click();

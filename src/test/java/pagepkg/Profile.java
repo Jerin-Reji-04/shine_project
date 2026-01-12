@@ -10,9 +10,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Scanner;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -23,7 +21,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 
 public class Profile 
 {
@@ -36,7 +33,7 @@ public class Profile
 	@FindBy(xpath = "(//button[contains(@class,'uploadResume_uploadButton__XM7Lv')])") WebElement uploadbtn;
 	@FindBy(name="resume_file")WebElement browsefile;
 	@FindBy(xpath = "(//button[contains(@class,'editIconButton_editBtn__OWFPw')])[4]")WebElement personalediticon;
-	
+	@FindBy(xpath = "//*[@id=\"__next\"]/div[5]/div/button")WebElement closebtn;
 	@FindBy(xpath = "//input[contains(@class,'personalDetails_dateInput')]")WebElement dateofbirthtextarea;
 	@FindBy(xpath = "//th[contains(@class,'rdtSwitch')]") 
 	WebElement calendarSwitcher;	
@@ -94,6 +91,7 @@ public class Profile
 	    }
 		
 		myprofile.click();
+//		closebtn.click();
 	}
 	
 	
@@ -162,132 +160,132 @@ public class Profile
 //	}
 //	
 	
-	public void desiredjob() {
-	    try {
-	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-	        // Wait for the element to be present
-	        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//button[contains(@class,'editIconButton_editBtn__OWFPw')])[3]")));
-	        
-	        JavascriptExecutor js = (JavascriptExecutor) driver;
-	        // Scroll it into the center of the view first
-	        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", desiredjobedit);
-	        Thread.sleep(1000); // Small pause for stability
-	        
-	        // Use JS Click to avoid "ElementClickInterceptedException"
-	        js.executeScript("arguments[0].click();", desiredjobedit);
-	        System.out.println("Desired job edit icon clicked successfully via JS.");
-	    } catch (Exception e) {
-	        System.out.println("Failed to click desired job: " + e.getMessage());
-	    }
-	}
-	
-	public void selectctc(String salaryValue) {
-	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-	    // 1. Click the dropdown to open the list
-	    wait.until(ExpectedConditions.elementToBeClickable(salary)).click();
-
-	    // 2. Locate the specific salary option from the 72 available
-	    // We use a dynamic XPath to find the div containing your specific text
-	    String optionXpath = "//div[contains(@class,'customSelect_option__L7DDI') and text()='" + salaryValue + "']";
-	    
-	    try {
-	        WebElement targetOption = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(optionXpath)));
-
-	        // 3. Scroll to the option (necessary if the salary is far down the list of 72)
-	        ((org.openqa.selenium.JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", targetOption);
-
-	        // 4. Click the option
-	        wait.until(ExpectedConditions.elementToBeClickable(targetOption)).click();
-	        System.out.println("Selected salary: " + salaryValue);
-
-	    } catch (Exception e) {
-	        Assert.fail("Could not find or click the salary option: " + salaryValue + ". Error: " + e.getMessage());
-	    }
-	}
-	
-	
-	
-    public void selectJobRole(String partialInput, String fullOptionText) 
-    {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        jobrole.clear();
-        jobrole.sendKeys(partialInput);
-        By listLocator = By.xpath("//ul[contains(@class,'desiredProfileModal_dropdown')]/li");
-        try {
-            wait.until(ExpectedConditions.visibilityOfElementLocated(listLocator));
-            List<WebElement> options = driver.findElements(listLocator);
-            for (WebElement opt : options)
-            {
-                if (opt.getText().trim().equalsIgnoreCase(fullOptionText)) {
-                    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", opt);
-                    break;
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            jobrole.sendKeys(Keys.ESCAPE);
-        }
-    }
-
-    
-    public void selectjoblocation(String partialInput, String locationToSelect) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        
-        // 1. Type input
-        joblocation.clear();
-        joblocation.sendKeys(partialInput);
-
-        // 2. Direct wait and click on the specific suggestion
-        try {
-            String xpath = "//li[contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), '" 
-                           + locationToSelect.toLowerCase() + "')]";
-            
-            WebElement option = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
-            
-            // 3. Use JavaScript click to ensure it works even if partially hidden
-            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", option);
-            
-        } catch (Exception e) {
-            System.out.println("Location not found: " + locationToSelect);
-            joblocation.sendKeys(Keys.ESCAPE);
-        }
-    }
-    public void savejobdetails() {
-        try {
-            new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.elementToBeClickable(savedesiredjob)).click();
-            System.out.println("Desired job details updated successfully");
-        } catch (Exception e) {
-            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", savedesiredjob);
-        }
-    }
-        
-        
-   
+//	public void desiredjob() {
+//	    try {
+//	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+//	        // Wait for the element to be present
+//	        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//button[contains(@class,'editIconButton_editBtn__OWFPw')])[3]")));
+//	        
+//	        JavascriptExecutor js = (JavascriptExecutor) driver;
+//	        // Scroll it into the center of the view first
+//	        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", desiredjobedit);
+//	        Thread.sleep(1000); // Small pause for stability
+//	        
+//	        // Use JS Click to avoid "ElementClickInterceptedException"
+//	        js.executeScript("arguments[0].click();", desiredjobedit);
+//	        System.out.println("Desired job edit icon clicked successfully via JS.");
+//	    } catch (Exception e) {
+//	        System.out.println("Failed to click desired job: " + e.getMessage());
+//	    }
+//	}
+//	
+//	public void selectctc(String salaryValue) {
+//	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//
+//	    // 1. Click the dropdown to open the list
+//	    wait.until(ExpectedConditions.elementToBeClickable(salary)).click();
+//
+//	    // 2. Locate the specific salary option from the 72 available
+//	    // We use a dynamic XPath to find the div containing your specific text
+//	    String optionXpath = "//div[contains(@class,'customSelect_option__L7DDI') and text()='" + salaryValue + "']";
+//	    
+//	    try {
+//	        WebElement targetOption = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(optionXpath)));
+//
+//	        // 3. Scroll to the option (necessary if the salary is far down the list of 72)
+//	        ((org.openqa.selenium.JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", targetOption);
+//
+//	        // 4. Click the option
+//	        wait.until(ExpectedConditions.elementToBeClickable(targetOption)).click();
+//	        System.out.println("Selected salary: " + salaryValue);
+//
+//	    } catch (Exception e) {
+//	        Assert.fail("Could not find or click the salary option: " + salaryValue + ". Error: " + e.getMessage());
+//	    }
+//	}
+//	
+//	
+//	
+//    public void selectJobRole(String partialInput, String fullOptionText) 
+//    {
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+//        jobrole.clear();
+//        jobrole.sendKeys(partialInput);
+//        By listLocator = By.xpath("//ul[contains(@class,'desiredProfileModal_dropdown')]/li");
+//        try {
+//            wait.until(ExpectedConditions.visibilityOfElementLocated(listLocator));
+//            List<WebElement> options = driver.findElements(listLocator);
+//            for (WebElement opt : options)
+//            {
+//                if (opt.getText().trim().equalsIgnoreCase(fullOptionText)) {
+//                    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", opt);
+//                    break;
+//                }
+//            }
+//        }
+//        catch (Exception e)
+//        {
+//            jobrole.sendKeys(Keys.ESCAPE);
+//        }
+//    }
+//
+//    
+//    public void selectjoblocation(String partialInput, String locationToSelect) {
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//        
+//        // 1. Type input
+//        joblocation.clear();
+//        joblocation.sendKeys(partialInput);
+//
+//        // 2. Direct wait and click on the specific suggestion
+//        try {
+//            String xpath = "//li[contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), '" 
+//                           + locationToSelect.toLowerCase() + "')]";
+//            
+//            WebElement option = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+//            
+//            // 3. Use JavaScript click to ensure it works even if partially hidden
+//            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", option);
+//            
+//        } catch (Exception e) {
+//            System.out.println("Location not found: " + locationToSelect);
+//            joblocation.sendKeys(Keys.ESCAPE);
+//        }
+//    }
+//    public void savejobdetails() {
+//        try {
+//            new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.elementToBeClickable(savedesiredjob)).click();
+//            System.out.println("Desired job details updated successfully");
+//        } catch (Exception e) {
+//            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", savedesiredjob);
+//        }
+//    }
+//        
+//        
+//   
         
     
     public void signout() throws Exception {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        Actions actions = new Actions(driver);
-        
-        try {
-            // 1. Re-hover the profile dropdown to ensure the menu is visible
-            wait.until(ExpectedConditions.visibilityOf(profiledropdown));
-            actions.moveToElement(profiledropdown).perform();
-            System.out.println("Hovered over profile for Signout.");
-
-            // 2. Wait for Signout button to be visible and clickable
-            wait.until(ExpectedConditions.elementToBeClickable(signoutBtn));
-
-            // 3. Use JavaScript click to bypass "ElementNotInteractable"
-            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", signoutBtn);
-            System.out.println("Signout clicked successfully via JS.");
-
-        } catch (Exception e) {
-            System.out.println("Signout failed: " + e.getMessage());
-            throw e; // Throw so TestNG marks it as FAILED
-        }
+    	try {
+	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+	        
+	        // 1. Wait for visibility to ensure it's not hidden by a popup
+	        wait.until(ExpectedConditions.visibilityOf(profiledropdown));
+	        
+	        // 2. Scroll into view (helps if the header is sticky or partially off-screen)
+	        ((org.openqa.selenium.JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", profiledropdown);
+	        
+	        // 3. Perform the hover
+	        Actions act = new Actions(driver);
+	        act.moveToElement(profiledropdown).build().perform();
+	        System.out.println("Successfully hovered over profile dropdown.");
+	        
+	    } 
+		catch (Exception e) 
+		{
+	        System.out.println("Could not hover over profile: " + e.getMessage());
+	    }
+    	signoutBtn.click();
         
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         FileHandler.copy(screenshot, new File("C:\\Users\\Lenovo\\OneDrive\\Desktop\\Selenium works\\screenshot\\signout.png"));

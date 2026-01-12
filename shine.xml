@@ -3,9 +3,10 @@
 <suite name="Suite">
   <test thread-count="5" name="Test">
     <classes>
-      <class name="testpkg.Home_bl_test"/>
-      <class name="testpkg.Profiletest"/>
+      <class name="testpkg.Hometest"/>
       <class name="testpkg.Logintest"/>
+      <class name="testpkg.carttest"/>
+      <class name="testpkg.Profiletest"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

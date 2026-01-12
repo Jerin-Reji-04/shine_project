@@ -3,17 +3,14 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="testpkg.Profiletest">
+      <class name="testpkg.Logintest">
         <methods>
           <include name="objectcreation"/>
           <include name="setup"/>
-          <include name="file_upload"/>
-          <include name="d_job"/>
-          <include name="login1"/>
-          <include name="Signout"/>
-          <include name="profile"/>
+          <include name="loginvalidation"/>
+          <include name="login"/>
         </methods>
-      </class> <!-- testpkg.Profiletest -->
+      </class> <!-- testpkg.Logintest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

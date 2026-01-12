@@ -13,8 +13,8 @@ public class Logintest extends Basepgm
 {
 	
 	@Test(priority=1)
-    public void login() throws Exception {
-        
+    public void login() throws Exception
+	{
         
         String xl = "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Selenium works\\Project.xlsx";
         String Sheet = "login";

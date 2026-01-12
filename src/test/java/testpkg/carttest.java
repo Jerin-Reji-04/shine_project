@@ -12,7 +12,6 @@ public class carttest extends Basepgm
 	{
 		car.setup();
 		car.explorebtn();
-		car.clickFirstBuyNow();
 	}
 	
 	@Test(priority=2)
@@ -20,12 +19,14 @@ public class carttest extends Basepgm
 	{
 		car.windowhandler();
 		hbl.closepopup();
+		car.clickSpecificBuyNow(1);
 	}
 	
 	@Test(priority=3)
 	public void delete()
 	{
 		car.cartitem();
+			
 	}
 	
 }
