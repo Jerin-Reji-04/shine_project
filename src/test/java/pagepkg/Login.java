@@ -1,5 +1,5 @@
-package pagepkg;
 
+package pagepkg;
 
 import java.time.Duration;
 
@@ -15,13 +15,15 @@ public class Login
 	
 	WebDriver driver;
 	
-	@FindBy(xpath = "//button[contains(text(),'Login')]")WebElement slogin;
-	@FindBy(xpath = "//input[@type='email' or @name='email']") WebElement semail;
-	@FindBy(xpath = "//input[@type='password' or @name='password']") WebElement spwrd;
-	@FindBy(xpath = "//button[contains(text(),'Log In')]") WebElement sloginbtn;
-	@FindBy(xpath = "(//*[contains(@class,'btn-close')])[2]")WebElement popupclose;
-	@FindBy(xpath = "//*[@id=\"_r_9_-checkbox-remember-me\"]") WebElement Checkbox;
-	@FindBy(xpath = "//button[contains(text(),'Login Via Password')]")WebElement l_passwrd;
+	@FindBy(xpath = "//button[contains(text(),'Login')]")WebElement flogin;
+	@FindBy(xpath = "//button[contains(text(),'Login Via Password')]")WebElement vpassword;
+	
+	
+	@FindBy(xpath = "//input[@id=\"_r_5_-input-email\"]")WebElement iemail;
+	@FindBy(xpath = "//input[@id=\"_r_7_-input-password\"]")WebElement ipassword;
+	@FindBy(xpath = "//button[@id=\"_r_c_\"]")WebElement loginbtn;
+	@FindBy(xpath = "//*[@id=\"_r_9_-checkbox-remember-me\"]")WebElement checkbox;
+	
 	
 	public Login(WebDriver driver)
 	{
@@ -29,106 +31,32 @@ public class Login
 		PageFactory.initElements(driver,this);
 	}
 	
-	
-	
-	public void loginclick()//to click the login button in the home page
+	public void setup()
 	{
-		
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-	    wait.until(ExpectedConditions.elementToBeClickable(slogin));
-	    slogin.click();
-	    System.out.println("Login modal opened");
-	}
-	
-	
-	
-	public void logindetail(String email, String password) {
-	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-	    l_passwrd.click();
+	    wait.until(ExpectedConditions.elementToBeClickable(flogin)).click();
 	    
-	    wait.until(ExpectedConditions.visibilityOf(semail));
-	    
-	    semail.sendKeys(email);
-	    spwrd.sendKeys(password);
+	    WebDriverWait wait1 = new WebDriverWait(driver, Duration.ofSeconds(5));
+	    wait1.until(ExpectedConditions.elementToBeClickable(vpassword)).click();
 	    
 	}
-
-	public void loginbtn() 
+	
+	public void setvalues(String email,String password)
 	{
-	    sloginbtn.click();
-	    
+		iemail.sendKeys(email);
+		ipassword.sendKeys(password);
+		
 	}
 	
-	
-	public String validation()//to get the current url
+	public void login()
 	{
-		return(driver.getCurrentUrl());
+		checkbox.click();
+		loginbtn.click();
 	}
 	
-//	public void closepopup() 
-//	{
-//		try {
-//			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-//			wait.until(ExpectedConditions.presenceOfElementLocated(By.id("modalID")));
-//			
-//			  System.out.println("Popup detected.");
-//		
-//			 try {
-//				 popupclose.click();
-//				 System.out.println("Clicked popup close button");
-//				 
-//				
-//			} catch (Exception e) {
-//				driver.findElement(By.tagName("body")).click();
-//	            System.out.println("Clicked body to dismiss popup");
-//			}
-//		}
-//		catch (Exception e) {
-//			System.out.println("No popup found or already gone");
-//		}
-//		}
-	public void checkbox()
-	{
-		try {
-	        if (!Checkbox.isSelected()) {
-	            Checkbox.click();
-	        }
-	    } catch (Exception e) 
-		{
-	        System.out.println("Checkbox not interactable or not found");
-	    }
-	}
-	
-	// Add this inside public class Login
-	public boolean loginWithExcel(String xlPath, String sheetName, Home hbl) throws Exception {
-	    int rowcount = utilitiespkg.Excelutilis.getRowCount(xlPath, sheetName);
-
-	    for (int i = 1; i <= rowcount; i++) {
-	        String user = utilitiespkg.Excelutilis.getCellValString(xlPath, sheetName, i, 0);
-	        String pass = utilitiespkg.Excelutilis.getCellValString(xlPath, sheetName, i, 1);
-
-	        if (user == null) continue;
-
-	        hbl.closepopup();
-	        this.loginclick();
-	        this.logindetail(user, pass);
-	        this.loginbtn();
-
-	        Thread.sleep(5000); 
-
-	        // If we reach the dashboard, stop and return true
-	        if (driver.getCurrentUrl().contains("home") || driver.getCurrentUrl().contains("dashboard")) {
-	            return true; 
-	        } 
-	        driver.navigate().refresh();
-	    }
-	    return false; // None worked
-	}
 	
 }
 
 
 
 	
-
-
